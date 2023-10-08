@@ -15,5 +15,9 @@ def get_all_photos(db):
     photos = list_serial(db.find())
     return photos
 
-def post_photo(request, db):
-    pass
+def post_photo(request: PhotoBase, db):
+    try:
+        created = db.insert_one(dict(request))
+        return serializer(db.find_one({"_id": created.inserted_id}))
+    except:
+        return {"message": "something went wrong"}

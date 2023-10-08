@@ -14,4 +14,4 @@ async def get_photos(db = Depends(get_db)):
 
 @router.post('/', response_model=PhotoDisplay)
 async def new_photo(request: PhotoBase, db = Depends(get_db)):
-    pass
+    return db_photo.post_photo(request, db)
