@@ -10,6 +10,6 @@ def get_db():
     try:
         client.admin.command('ping')
         yield collection
-    finally:
-        print(f'Conectado a la DB: {collection.name}')
+    except:
+        print(f'Hubo algun error intentando acceder a la coleción: {collection.name}')
         
