@@ -8,4 +8,8 @@ collection = db.images
 
 def get_db():
     try:
-        yield client.command()
+        client.admin.command('ping')
+        yield collection
+    finally:
+        print(f'Conectado a la DB: {collection.name}')
+        

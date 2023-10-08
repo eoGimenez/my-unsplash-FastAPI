@@ -1,7 +1,7 @@
 from fastapi import FastAPI
+from routes import photo
 
 app = FastAPI()
 
-@app.get('/')
-def hello():
-    return {"message": "Hello maaaan"}
+
+app.include_router(photo.router)

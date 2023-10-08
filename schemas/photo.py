@@ -1,10 +1,10 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 class PhotoBase(BaseModel):
     label: str
     imgUrl: str
 
 class PhotoDisplay(BaseModel):
-    _id: str
+    id: str = Field(alias="_id")
     label: str
     imgUrl: str
