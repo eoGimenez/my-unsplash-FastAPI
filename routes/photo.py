@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, Security
-from schemas.photo import PhotoBase, PhotoDisplay
+from schemas.photo import PhotoBase, PhotoDisplay, PhotoDelete
 from typing import List
 from config.database import get_db
 from config import db_photo
@@ -19,3 +19,7 @@ async def new_photo(request: PhotoBase, db = Depends(get_db)):
 @router.put('/{id}', response_model=PhotoDisplay)
 async def update_photo(id: str, request: PhotoBase, db = Depends(get_db)):
     return db_photo.update_one_photo(id, request, db)
+
+@router.delete('/{id}')
+async def delete_photo(id: str, request: PhotoDelete, db = Depends(get_db)):
+    return db_photo.delete_one(id, request, db)

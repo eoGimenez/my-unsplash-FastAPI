@@ -8,3 +8,6 @@ class PhotoDisplay(BaseModel):
     id: str = Field(alias="_id")
     label: str
     imgUrl: str
+
+class PhotoDelete(BaseModel):
+    userCode: str

@@ -26,6 +26,15 @@ def post_photo(request: PhotoBase, db):
 def update_one_photo(id: str, request: PhotoBase, db):
     try:
         updated_one = db.find_one_and_update({"_id": ObjectId(id)}, {"$set": dict(request)})
+        print(updated_one)
         return serializer(db.find_one({"_id": updated_one["_id"]}))
+    except:
+        return {"message": "something went wrong"}
+    
+def delete_one(id: str, request, db):
+    # Validacion del userCode.
+    try:
+        db.find_one_and_delete({"_id": ObjectId(id)})
+        return {"message": "The Photo was deleted"}
     except:
         return {"message": "something went wrong"}
