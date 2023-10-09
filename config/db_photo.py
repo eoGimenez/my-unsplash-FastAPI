@@ -45,4 +45,6 @@ def delete_one(id: str, request, db):
 def get_user_code(request: PhotoDelete):
     if (request.userCode != USER_CODE):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
-                            detail='Your User code is not correct')
+                            detail='Your User code is not correct'
+                            )
+    pass

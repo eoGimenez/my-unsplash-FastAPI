@@ -23,7 +23,5 @@ async def update_photo(id: str, request: PhotoBase, db = Depends(get_db)):
     return db_photo.update_one_photo(id, request, db)
 
 @router.delete('/{id}')
-async def delete_photo(id: str, request: PhotoDelete, db = Depends(get_db)):
-    if (request.userCode != USER_CODE):
-        return {'error': 'Your User code is not correct'}
+async def delete_photo(id: str, request: PhotoDelete = Security(db_photo.get_user_code), db = Depends(get_db)):
     return db_photo.delete_one(id, request, db)
