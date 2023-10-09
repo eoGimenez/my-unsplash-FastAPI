@@ -1,6 +1,9 @@
+import os
 from fastapi import HTTPException, status
-from schemas.photo import PhotoBase
+from schemas.photo import PhotoBase, PhotoDelete
 from bson import ObjectId
+
+USER_CODE = os.environ.get('USER_CODE')
 
 def serializer(photo) -> dict:
     return {
@@ -21,7 +24,7 @@ def post_photo(request: PhotoBase, db):
         created = db.insert_one(dict(request))
         return serializer(db.find_one({"_id": created.inserted_id}))
     except:
-        return {"message": "something went wrong"}
+        return {"error": "something went wrong"}
     
 def update_one_photo(id: str, request: PhotoBase, db):
     try:
@@ -29,7 +32,7 @@ def update_one_photo(id: str, request: PhotoBase, db):
         print(updated_one)
         return serializer(db.find_one({"_id": updated_one["_id"]}))
     except:
-        return {"message": "something went wrong"}
+        return {"error": "something went wrong"}
     
 def delete_one(id: str, request, db):
     # Validacion del userCode.
@@ -37,4 +40,9 @@ def delete_one(id: str, request, db):
         db.find_one_and_delete({"_id": ObjectId(id)})
         return {"message": "The Photo was deleted"}
     except:
-        return {"message": "something went wrong"}
+        return {"error": "something went wrong"}
+
+def get_user_code(request: PhotoDelete):
+    if (request.userCode != USER_CODE):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                            detail='Your User code is not correct')
