@@ -8,7 +8,6 @@ from config import db_photo
 router = APIRouter(prefix='/api')
 
 
-
 @router.get('/', response_model=List[PhotoDisplay])
 async def get_photos(db = Depends(get_db)):
     return db_photo.get_all_photos(db)

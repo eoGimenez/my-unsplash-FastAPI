@@ -34,8 +34,7 @@ def update_one_photo(id: str, request: PhotoBase, db):
     except:
         return {"error": "something went wrong"}
     
-def delete_one(id: str, request, db):
-    # Validacion del userCode.
+def delete_one(id: str, db):
     try:
         db.find_one_and_delete({"_id": ObjectId(id)})
         return {"message": "The Photo was deleted"}
