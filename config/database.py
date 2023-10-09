@@ -7,9 +7,8 @@ db = client["my-unsplash-master"]
 collection = db.images
 
 def get_db():
+    client.admin.command('ping')
     try:
-        client.admin.command('ping')
         yield collection
     except:
         print(f'Hubo algun error intentando acceder a la coleción: {collection.name}')
-        

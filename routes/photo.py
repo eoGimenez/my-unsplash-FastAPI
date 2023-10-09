@@ -23,4 +23,4 @@ async def update_photo(id: str, request: PhotoBase, db = Depends(get_db)):
 
 @router.delete('/{id}')
 async def delete_photo(id: str, request: PhotoDelete = Security(db_photo.get_user_code), db = Depends(get_db)):
-    return db_photo.delete_one(id, request, db)
+    return db_photo.delete_one(id, db)
