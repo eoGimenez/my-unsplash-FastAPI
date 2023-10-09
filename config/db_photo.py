@@ -16,15 +16,25 @@ def list_serial(photos) -> list:
     return [serializer(photo) for photo in photos]
 
 def get_all_photos(db):
-    photos = list_serial(db.find())
-    return photos
+    try:
+        photos = list_serial(db.find())
+        return photos
+    except:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail='something went wrong'
+        )
+
 
 def post_photo(request: PhotoBase, db):
     try:
         created = db.insert_one(dict(request))
         return serializer(db.find_one({"_id": created.inserted_id}))
     except:
-        return {"error": "something went wrong"}
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail='something went wrong'
+        )
     
 def update_one_photo(id: str, request: PhotoBase, db):
     try:
@@ -32,14 +42,20 @@ def update_one_photo(id: str, request: PhotoBase, db):
         print(updated_one)
         return serializer(db.find_one({"_id": updated_one["_id"]}))
     except:
-        return {"error": "something went wrong"}
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail='something went wrong'
+        )
     
 def delete_one(id: str, db):
     try:
         db.find_one_and_delete({"_id": ObjectId(id)})
         return {"message": "The Photo was deleted"}
     except:
-        return {"error": "something went wrong"}
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail='something went wrong'
+        )
 
 def get_user_code(request: PhotoDelete):
     if (request.userCode != USER_CODE):
