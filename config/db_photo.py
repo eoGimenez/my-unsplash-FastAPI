@@ -61,4 +61,4 @@ def get_user_code(request: PhotoDelete):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                             detail='Your User code is not correct'
                             )
-    pass
+    return status.HTTP_100_CONTINUE
